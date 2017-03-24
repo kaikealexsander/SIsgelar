@@ -1,0 +1,48 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package sisgelar.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author Admin
+ */
+public class Conexao {
+    protected Connection con;
+    protected Statement st;
+    protected String query;
+
+    public Conexao() {
+        try {            
+//            final String URL = "jdbc:mysql://teclux.cdkjtx3klgqi.sa-east-1.rds.amazonaws.com:3306/teclux";
+//            final String DRIVER = "com.mysql.jdbc.Driver";
+//            final String USUARIO = "teclux";
+//            final String SENHA = "killerbee";
+//            
+//            final String URL = "jdbc:mysql://179.108.181.193:3306/Sisar";
+//            final String DRIVER = "com.mysql.jdbc.Driver";
+//            final String USUARIO = "trampo";
+//            final String SENHA = "killerbee";
+            final String URL = "jdbc:mysql://localhost/Sisar";
+            final String DRIVER = "com.mysql.jdbc.Driver";
+            final String USUARIO = "root";
+            final String SENHA = "";
+            Class.forName(DRIVER);
+            con = DriverManager.getConnection(URL,USUARIO,SENHA);
+            st = con.createStatement();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Falha ao conectar ao banco de dados!\n"+e);
+            e.printStackTrace();
+        }
+    }
+
+    
+}
