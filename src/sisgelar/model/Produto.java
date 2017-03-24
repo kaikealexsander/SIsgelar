@@ -7,7 +7,7 @@ package sisgelar.model;
 
 /**
  *
- * @author kaike
+ * @author Kaike Leite
  */
 public class Produto {
     private int codProd;

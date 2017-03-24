@@ -6,8 +6,6 @@ package sisgelar.controller;
  * and open the template in the editor.
  */
 
-
-
 import java.util.List;
 import sisgelar.dao.PessoaDao;
 import sisgelar.model.Pessoa;
@@ -15,7 +13,7 @@ import sisgelar.model.Pessoa;
 
 /**
  *
- * @author Admin
+ * @author Kaike Leite
  */
 public abstract class PessoaController {
     
@@ -43,5 +41,4 @@ public abstract class PessoaController {
         PessoaDao dao = new PessoaDao();
         return dao.alterar(p);
     }
-    
 }

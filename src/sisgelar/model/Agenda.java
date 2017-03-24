@@ -7,7 +7,7 @@ package sisgelar.model;
 
 /**
  *
- * @author kaike
+ * @author Kaike Leite
  */
 public class Agenda {
     private int idAgenda;
@@ -56,6 +56,5 @@ public class Agenda {
     public void setHorario(String horario) {
         this.horario = horario;
     }
-    
        
 }

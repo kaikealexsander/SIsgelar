@@ -6,16 +6,13 @@ package sisgelar.controller;
  * and open the template in the editor.
  */
 
-
-
 import java.util.List;
 import sisgelar.dao.ProdutoClienteDao;
 import sisgelar.model.ProdutoCliente;
 
-
 /**
  *
- * @author Admin
+ * @author Kaike Leite
  */
 public abstract class ProdutoClienteController {
     
@@ -43,5 +40,4 @@ public abstract class ProdutoClienteController {
         ProdutoClienteDao dao = new ProdutoClienteDao();
         return dao.alterar(p);
     }
-    
 }

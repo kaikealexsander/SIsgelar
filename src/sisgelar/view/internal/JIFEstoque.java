@@ -89,7 +89,7 @@ public class JIFEstoque extends javax.swing.JInternalFrame {
 
         jtfLucro.setText(" ");
 
-        jLabel9.setText(" Sem imagem");
+        jLabel9.setText("Sem imagem");
         jLabel9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel10.setText("Categoria:");
@@ -361,6 +361,4 @@ public class JIFEstoque extends javax.swing.JInternalFrame {
         Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
     }
-
-    
 }

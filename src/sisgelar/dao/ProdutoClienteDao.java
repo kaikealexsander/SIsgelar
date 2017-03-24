@@ -17,22 +17,19 @@ import sisgelar.model.ProdutoCliente;
  * @author kaikealexsander
  */
 public class ProdutoClienteDao extends Conexao{
- //SELECT `idProdCliente`, `idCliente`, `marca`, `potencia`, `voltagem`, `modelo`, `localizacao` FROM `tb_ProdCliente` WHERE 1   
-    
     private PreparedStatement ps;
     private ResultSet rs;
     
     public boolean inserir(ProdutoCliente p){
         try {
             query = "insert into tb_ProdCliente values(0,?,?,?,?,?)";
-            
-            ps = con.prepareStatement(query);
-            ps.setInt(1, p.getIdCliente());
-            ps.setString(1, p.getMarca());
-            ps.setString(2, p.getPotencia());
-            ps.setString(3, p.getVoltagem());
-            ps.setString(4, p.getModelo());
-            ps.setString(5, p.getLocalizacao());
+                ps = con.prepareStatement(query);
+                ps.setInt(1, p.getIdCliente());
+                ps.setString(1, p.getMarca());
+                ps.setString(2, p.getPotencia());
+                ps.setString(3, p.getVoltagem());
+                ps.setString(4, p.getModelo());
+                ps.setString(5, p.getLocalizacao());
             if (ps.executeUpdate() > 0)
                 return true;
         } catch (Exception e) {
@@ -45,12 +42,10 @@ public class ProdutoClienteDao extends Conexao{
     public boolean excluir(ProdutoCliente p){
         try {
             query = "delete from tb_ProdCliente where idProdCliente=?";
-            ps = con.prepareStatement(query);
-            ps.setInt(1, p.getIdProdCliente());
-            
+                ps = con.prepareStatement(query);
+                ps.setInt(1, p.getIdProdCliente());
             if (ps.executeUpdate() > 0)
                 return true;
-            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Falha ao excluir dados na tabela ProdCLientes! \n"+e);
             e.printStackTrace();
@@ -60,21 +55,17 @@ public class ProdutoClienteDao extends Conexao{
 
     public boolean alterar(ProdutoCliente p){
         try {
-//UPDATE `tb_ProdCliente` SET `idProdCliente`=[value-1],`idCliente`=[value-2],`marca`=[value-3],`potencia`=[value-4],
-//`voltagem`=[value-5],`modelo`=[value-6],`localizacao`=[value-7] WHERE 1
             query = "update tb_ProdCliente set idCliente=?, marca=?, potencia=?, voltagem=?, modelo=?, localizacao=? where idProdCliente=?";
-            ps = con.prepareStatement(query);
-            ps.setInt(1, p.getIdCliente());
-            ps.setString(2, p.getMarca());
-            ps.setString(3, p.getPotencia());
-            ps.setString(4, p.getVoltagem());
-            ps.setString(5, p.getModelo());
-            ps.setString(6, p.getLocalizacao());
-            ps.setInt(7, p.getIdProdCliente());
-            
+                ps = con.prepareStatement(query);
+                ps.setInt(1, p.getIdCliente());
+                ps.setString(2, p.getMarca());
+                ps.setString(3, p.getPotencia());
+                ps.setString(4, p.getVoltagem());
+                ps.setString(5, p.getModelo());
+                ps.setString(6, p.getLocalizacao());
+                ps.setInt(7, p.getIdProdCliente());
             if (ps.executeUpdate() > 0)
                 return true;
-            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Falha ao alterar dados na tabela ProdCliente! \n"+e);
             e.printStackTrace();
@@ -89,26 +80,21 @@ public class ProdutoClienteDao extends Conexao{
     public List<ProdutoCliente> buscar(String t) {
                List<ProdutoCliente> lista = new ArrayList<ProdutoCliente>();
        try {
-//SELECT `idPessoa`, `nome`, `cpf`, `endereco`, `cep`, `bairro`, `email`, `telefone`, `celular`, `celular2` FROM `tb_Pessoas` WHERE 1           
-           
-            query = "select * from tb_ProdCliente WHERE marca like concat('%',?,'%') order by idProdCliente";
-            ps = con.prepareStatement(query);
-            ps.setString(1, t);
-            rs = ps.executeQuery();
-            while (rs.next())
-                lista.add(new ProdutoCliente(
-                        rs.getInt("idProdCliente"),
-                        rs.getInt("idCliente"),
-                        rs.getString("marca"),
-                        rs.getString("potencia"),
-                        rs.getString("voltagem"),
-                        rs.getString("modelo"),
-                        rs.getString("localizacao")
-                ));
-            
-       ////SELECT `idProdCliente`, `idCliente`, `marca`, `potencia`, `voltagem`, `modelo`, `localizacao` FROM `tb_ProdCliente` WHERE 1   
-            
-        } catch (Exception e) {
+                query = "select * from tb_ProdCliente WHERE marca like concat('%',?,'%') order by idProdCliente";
+                    ps = con.prepareStatement(query);
+                    ps.setString(1, t);
+               rs = ps.executeQuery();
+               while (rs.next())
+                    lista.add(new ProdutoCliente(
+                            rs.getInt("idProdCliente"),
+                            rs.getInt("idCliente"),
+                            rs.getString("marca"),
+                            rs.getString("potencia"),
+                            rs.getString("voltagem"),
+                            rs.getString("modelo"),
+                            rs.getString("localizacao")
+                    ));
+            } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Falha ao buscar dados na tabela ProdCliente! \n"+e);
             e.printStackTrace();
             lista = null;
@@ -120,9 +106,9 @@ public class ProdutoClienteDao extends Conexao{
                List<ProdutoCliente> lista = new ArrayList<ProdutoCliente>();
        try {
             query = "select * from tb_ProdCliente where marca = ? order by marca";
-            ps = con.prepareStatement(query);
-            ps.setInt(1, t);
-            rs = ps.executeQuery();
+                ps = con.prepareStatement(query);
+                ps.setInt(1, t);
+           rs = ps.executeQuery();
             while (rs.next())
                 lista.add(new ProdutoCliente(
                         rs.getInt("idProdCliente"),
@@ -133,8 +119,7 @@ public class ProdutoClienteDao extends Conexao{
                         rs.getString("modelo"),
                         rs.getString("localizacao")
                 ));
-            
-        } catch (Exception e) {
+       } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Falha ao buscar dados na tabela ProdCliente! \n"+e);
             e.printStackTrace();
             lista = null;

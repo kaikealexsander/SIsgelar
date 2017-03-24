@@ -10,8 +10,7 @@ import sisgelar.model.OrdemServico;
 public class OrdemServicoDao extends Conexao{
     private PreparedStatement ps;
     private ResultSet rs;
-    //INSERT INTO `tbOrdemServicos`(`idOrdemServico`, `nome`, `cpf`, `endereco`, 
-    //`telefone`, `celular`, `celular2`, `cep`, `email`, `fantasia`) 
+    
     public boolean inserir(OrdemServico p){
         try {
             query = "insert into tb_OS values(0,?,?,?,?,?,?,?)";
@@ -47,13 +46,10 @@ public class OrdemServicoDao extends Conexao{
         }
         return false;
     }
-    //UPDATE `tb_OrdemServicos` SET `idOrdemServico`=[value-1],`nome`=[value-2],`cpf`=[value-3],`endereco`=[value-4],`cep`=[value-5],`bairro`=[value-6]
-    //`email`=[value-7],`telefone`=[value-8],`celular`=[value-9],`celular2`=[value-10] WHERE 1
+    
     public boolean alterar(OrdemServico p){
         try {
-     //UPDATE `tb_OrdemServicos` SET `idOrdemServico`=[value-1],`nome`=[value-2],`cpf`=[value-3],`endereco`=[value-4],
-     //`cep`=[value-5],`bairro`=[value-6],`email`=[value-7],`telefone`=[value-8],`celular`=[value-9],`celular2`=[value-10] WHERE 1
-            query = "update tb_OrdemServicos set nome=?, cpf=?, endereco=?, cep=?, bairro=?, email=?, telefone=?, "
+             query = "update tb_OrdemServicos set nome=?, cpf=?, endereco=?, cep=?, bairro=?, email=?, telefone=?, "
                     + "celular=?, celular2=?, fantasia=?, numero=? where idOrdemServico=?";
             ps = con.prepareStatement(query);
             ps.setInt(1, p.getIdOS());
@@ -78,8 +74,6 @@ public class OrdemServicoDao extends Conexao{
     public List<OrdemServico> buscar(String t) {
                List<OrdemServico> lista = new ArrayList<OrdemServico>();
        try {
-//SELECT `idOrdemServico`, `nome`, `cpf`, `endereco`, `cep`, `bairro`, `email`, `telefone`, `celular`, `celular2` FROM `tb_OrdemServicos` WHERE 1           
-           
             query = "select * from tb_OS where data like concat('%',?,'%') order by idOS";
             ps = con.prepareStatement(query);
             ps.setString(1, t);

@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Admin
+ * @author Kaike Leite
  */
 public class Conexao {
     protected Connection con;
@@ -21,19 +21,14 @@ public class Conexao {
 
     public Conexao() {
         try {            
-//            final String URL = "jdbc:mysql://teclux.cdkjtx3klgqi.sa-east-1.rds.amazonaws.com:3306/teclux";
-//            final String DRIVER = "com.mysql.jdbc.Driver";
-//            final String USUARIO = "teclux";
-//            final String SENHA = "killerbee";
-//            
-//            final String URL = "jdbc:mysql://179.108.181.193:3306/Sisar";
-//            final String DRIVER = "com.mysql.jdbc.Driver";
-//            final String USUARIO = "trampo";
-//            final String SENHA = "killerbee";
-            final String URL = "jdbc:mysql://localhost/Sisar";
+            final String URL = "jdbc:mysql://179.108.181.193:3306/Sisar";
             final String DRIVER = "com.mysql.jdbc.Driver";
-            final String USUARIO = "root";
-            final String SENHA = "";
+            final String USUARIO = "trampo";
+            final String SENHA = "killerbee";
+//            final String URL = "jdbc:mysql://localhost/Sisar";
+//            final String DRIVER = "com.mysql.jdbc.Driver";
+//            final String USUARIO = "root";
+//            final String SENHA = "";
             Class.forName(DRIVER);
             con = DriverManager.getConnection(URL,USUARIO,SENHA);
             st = con.createStatement();
@@ -43,6 +38,4 @@ public class Conexao {
             e.printStackTrace();
         }
     }
-
-    
 }

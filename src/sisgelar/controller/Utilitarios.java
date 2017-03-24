@@ -17,8 +17,6 @@ import javax.swing.JInternalFrame;
 import javax.swing.JRootPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-//import sisar.model.Produto;
-//import sisar.view.bcVendas;
 
 /**
  *

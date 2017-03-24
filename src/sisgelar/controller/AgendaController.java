@@ -6,8 +6,6 @@ package sisgelar.controller;
  * and open the template in the editor.
  */
 
-
-
 import java.util.List;
 import sisgelar.dao.AgendaDao;
 import sisgelar.model.Agenda;
@@ -15,7 +13,7 @@ import sisgelar.model.Agenda;
 
 /**
  *
- * @author Admin
+ * @author Kaike Leite
  */
 public abstract class AgendaController {
     
@@ -43,5 +41,4 @@ public abstract class AgendaController {
         AgendaDao dao = new AgendaDao();
         return dao.alterar(p);
     }
-    
 }

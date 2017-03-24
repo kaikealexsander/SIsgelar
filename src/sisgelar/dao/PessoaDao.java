@@ -10,8 +10,7 @@ import sisgelar.model.Pessoa;
 public class PessoaDao extends Conexao{
     private PreparedStatement ps;
     private ResultSet rs;
-    //INSERT INTO `tbPessoas`(`idPessoa`, `nome`, `cpf`, `endereco`, 
-    //`telefone`, `celular`, `celular2`, `cep`, `email`, `fantasia`) 
+    
     public boolean inserir(Pessoa p){
         try {
             query = "insert into tb_Pessoas values(0,?,?,?,?,?,?,?,?,?,?,?)";
@@ -52,12 +51,9 @@ public class PessoaDao extends Conexao{
         }
         return false;
     }
-    //UPDATE `tb_Pessoas` SET `idPessoa`=[value-1],`nome`=[value-2],`cpf`=[value-3],`endereco`=[value-4],`cep`=[value-5],`bairro`=[value-6]
-    //`email`=[value-7],`telefone`=[value-8],`celular`=[value-9],`celular2`=[value-10] WHERE 1
+
     public boolean alterar(Pessoa p){
         try {
-     //UPDATE `tb_Pessoas` SET `idPessoa`=[value-1],`nome`=[value-2],`cpf`=[value-3],`endereco`=[value-4],
-     //`cep`=[value-5],`bairro`=[value-6],`email`=[value-7],`telefone`=[value-8],`celular`=[value-9],`celular2`=[value-10] WHERE 1
             query = "update tb_Pessoas set nome=?, cpf=?, endereco=?, cep=?, bairro=?, email=?, telefone=?, "
                     + "celular=?, celular2=?, fantasia=?, numero=? where idPessoa=?";
             ps = con.prepareStatement(query);
@@ -91,8 +87,6 @@ public class PessoaDao extends Conexao{
     public List<Pessoa> buscar(String t) {
                List<Pessoa> lista = new ArrayList<Pessoa>();
        try {
-//SELECT `idPessoa`, `nome`, `cpf`, `endereco`, `cep`, `bairro`, `email`, `telefone`, `celular`, `celular2` FROM `tb_Pessoas` WHERE 1           
-           
             query = "select * from tb_Pessoas where nome like concat('%',?,'%') order by idPessoa";
             ps = con.prepareStatement(query);
             ps.setString(1, t);

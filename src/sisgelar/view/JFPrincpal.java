@@ -9,6 +9,7 @@ package sisgelar.view;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import sisgelar.view.internal.JIFAgenda;
 import sisgelar.view.internal.JIFEstoque;
 
@@ -72,14 +73,22 @@ public class JFPrincpal extends javax.swing.JFrame {
 
         jdpPrincipal = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
+        jmArquivo = new javax.swing.JMenu();
+        jmiSair = new javax.swing.JMenuItem();
+        jmEditar = new javax.swing.JMenu();
+        jmiClientes = new javax.swing.JMenu();
         jMiClientes = new javax.swing.JMenuItem();
+        jmOrdensServico = new javax.swing.JMenu();
+        jmiAgenda = new javax.swing.JMenuItem();
+        jmiOS = new javax.swing.JMenuItem();
+        jmiOSRelatorios = new javax.swing.JMenuItem();
+        jmiProdutos = new javax.swing.JMenu();
         jmiEstoque = new javax.swing.JMenuItem();
+        jmiEstoqueRelatorios = new javax.swing.JMenuItem();
+        jmAjuda = new javax.swing.JMenu();
+        jmiSobre = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         javax.swing.GroupLayout jdpPrincipalLayout = new javax.swing.GroupLayout(jdpPrincipal);
         jdpPrincipal.setLayout(jdpPrincipalLayout);
@@ -92,13 +101,23 @@ public class JFPrincpal extends javax.swing.JFrame {
             .addGap(0, 579, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        jmArquivo.setText("Arquivo");
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        jmiSair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
+        jmiSair.setText("Sair");
+        jmiSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiSairActionPerformed(evt);
+            }
+        });
+        jmArquivo.add(jmiSair);
 
-        jMenu3.setText("Cadastrar");
+        jMenuBar1.add(jmArquivo);
+
+        jmEditar.setText("Editar");
+        jMenuBar1.add(jmEditar);
+
+        jmiClientes.setText("Cadastros");
 
         jMiClientes.setText("Clientes");
         jMiClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -106,17 +125,44 @@ public class JFPrincpal extends javax.swing.JFrame {
                 jMiClientesActionPerformed(evt);
             }
         });
-        jMenu3.add(jMiClientes);
+        jmiClientes.add(jMiClientes);
 
-        jmiEstoque.setText("Estoque");
+        jMenuBar1.add(jmiClientes);
+
+        jmOrdensServico.setText("Ordens de serviço");
+
+        jmiAgenda.setText("Agenda");
+        jmOrdensServico.add(jmiAgenda);
+
+        jmiOS.setText("O.S");
+        jmOrdensServico.add(jmiOS);
+
+        jmiOSRelatorios.setText("Relatórios");
+        jmOrdensServico.add(jmiOSRelatorios);
+
+        jMenuBar1.add(jmOrdensServico);
+
+        jmiProdutos.setText("Estoque");
+
+        jmiEstoque.setText("Produtos");
         jmiEstoque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmiEstoqueActionPerformed(evt);
             }
         });
-        jMenu3.add(jmiEstoque);
+        jmiProdutos.add(jmiEstoque);
 
-        jMenuBar1.add(jMenu3);
+        jmiEstoqueRelatorios.setText("Relatórios");
+        jmiProdutos.add(jmiEstoqueRelatorios);
+
+        jMenuBar1.add(jmiProdutos);
+
+        jmAjuda.setText("Ajuda");
+
+        jmiSobre.setText("Sobre");
+        jmAjuda.add(jmiSobre);
+
+        jMenuBar1.add(jmAjuda);
 
         setJMenuBar(jMenuBar1);
 
@@ -145,6 +191,16 @@ public class JFPrincpal extends javax.swing.JFrame {
                 // TODO add your handling code here:
 
     }//GEN-LAST:event_jmiEstoqueActionPerformed
+
+    private void jmiSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSairActionPerformed
+        switch (JOptionPane.showConfirmDialog(null, "Deseja realmente sair do Sistema?","Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE )) {
+                    case 0:/*Botão 'Sim' clicado*/
+                        System.exit(0);
+                        break;
+                    case 1:
+                        break;
+                }
+    }//GEN-LAST:event_jmiSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,12 +238,21 @@ public class JFPrincpal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMiClientes;
     private javax.swing.JDesktopPane jdpPrincipal;
+    private javax.swing.JMenu jmAjuda;
+    private javax.swing.JMenu jmArquivo;
+    private javax.swing.JMenu jmEditar;
+    private javax.swing.JMenu jmOrdensServico;
+    private javax.swing.JMenuItem jmiAgenda;
+    private javax.swing.JMenu jmiClientes;
     private javax.swing.JMenuItem jmiEstoque;
+    private javax.swing.JMenuItem jmiEstoqueRelatorios;
+    private javax.swing.JMenuItem jmiOS;
+    private javax.swing.JMenuItem jmiOSRelatorios;
+    private javax.swing.JMenu jmiProdutos;
+    private javax.swing.JMenuItem jmiSair;
+    private javax.swing.JMenuItem jmiSobre;
     // End of variables declaration//GEN-END:variables
 }

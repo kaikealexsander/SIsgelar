@@ -7,7 +7,7 @@ package sisgelar.model;
 
 /**
  *
- * @author Admin
+ * @author Kaike Leite
  */
 public class Pessoa {
     private int idpessoa;
@@ -143,6 +143,4 @@ public class Pessoa {
     public String toString() {
         return "Pessoa{" + "idpessoa=" + idpessoa + ", nome=" + nome + ", cpf=" + cpf + ", endereco=" + endereco + ", cep=" + cep + ", bairro=" + bairro + ", email=" + email + ", telefone=" + telefone + ", celular=" + celular + ", celular2=" + celular2 + '}';
     }
-    
-    
 }

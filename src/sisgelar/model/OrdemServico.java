@@ -7,7 +7,7 @@ package sisgelar.model;
 
 /**
  *
- * @author kaike
+ * @author Kaike Leite
  */
 public class OrdemServico {
     private int idOS;
@@ -76,6 +76,4 @@ public class OrdemServico {
     public void setValor(double valor) {
         this.valor = valor;
     }
-    
-
 }
