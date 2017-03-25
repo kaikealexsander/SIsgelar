@@ -22,18 +22,19 @@ public class ProdutoClienteDao extends Conexao{
     
     public boolean inserir(ProdutoCliente p){
         try {
-            query = "insert into tb_ProdCliente values(0,?,?,?,?,?)";
+            
+            query = "insert into tb_ProdCliente values(0,?,?,?,?,?,?)";
                 ps = con.prepareStatement(query);
                 ps.setInt(1, p.getIdCliente());
-                ps.setString(1, p.getMarca());
-                ps.setString(2, p.getPotencia());
-                ps.setString(3, p.getVoltagem());
-                ps.setString(4, p.getModelo());
-                ps.setString(5, p.getLocalizacao());
+                ps.setString(2, p.getMarca());
+                ps.setString(3, p.getPotencia());
+                ps.setString(4, p.getVoltagem());
+                ps.setString(5, p.getModelo());
+                ps.setString(6, p.getLocalizacao());
             if (ps.executeUpdate() > 0)
                 return true;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Falha ao inserir dados na tabela ProdCLientes! \n"+e);
+            JOptionPane.showMessageDialog(null, "Falha ao inserir dados na tabela ProdCLiente! \n"+e);
             e.printStackTrace();
         }
         return false;
@@ -80,7 +81,7 @@ public class ProdutoClienteDao extends Conexao{
     public List<ProdutoCliente> buscar(String t) {
                List<ProdutoCliente> lista = new ArrayList<ProdutoCliente>();
        try {
-                query = "select * from tb_ProdCliente WHERE marca like concat('%',?,'%') order by idProdCliente";
+                query = "select * from tb_ProdCliente WHERE marca or modelo like concat('%',?,'%') order by idProdCliente";
                     ps = con.prepareStatement(query);
                     ps.setString(1, t);
                rs = ps.executeQuery();
@@ -102,12 +103,61 @@ public class ProdutoClienteDao extends Conexao{
         return lista;
     }
     
-    public List<ProdutoCliente> buscar(int t) {
+    public List<ProdutoCliente> busque(String l) {
                List<ProdutoCliente> lista = new ArrayList<ProdutoCliente>();
        try {
-            query = "select * from tb_ProdCliente where marca = ? order by marca";
+                query = "select * from tb_ProdCliente order by idProdCliente";
+                    ps = con.prepareStatement(query);
+                    rs = ps.executeQuery();
+               while (rs.next())
+                    lista.add(new ProdutoCliente(
+                            rs.getInt("idProdCliente"),
+                            rs.getInt("idCliente"),
+                            rs.getString("marca"),
+                            rs.getString("potencia"),
+                            rs.getString("voltagem"),
+                            rs.getString("modelo"),
+                            rs.getString("localizacao")
+                    ));
+            } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Falha ao buscar dados na tabela ProdCliente! \n"+e);
+            e.printStackTrace();
+            lista = null;
+        }
+        return lista;
+    }
+    
+    public List<ProdutoCliente> buscar(int t) {/*busca os produtos do cliente pelo seu id*/
+               List<ProdutoCliente> lista = new ArrayList<ProdutoCliente>();
+       try {
+            query = "select * from tb_ProdCliente where idCliente=? order by idProdCliente ASC";
                 ps = con.prepareStatement(query);
                 ps.setInt(1, t);
+           rs = ps.executeQuery();
+            while (rs.next())
+                lista.add(new ProdutoCliente(
+                        rs.getInt("idProdCliente"),
+                        rs.getInt("idCliente"),
+                        rs.getString("marca"),
+                        rs.getString("potencia"),
+                        rs.getString("voltagem"),
+                        rs.getString("modelo"),
+                        rs.getString("localizacao")
+                ));
+       } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Falha ao buscar dados na tabela ProdCliente! \n"+e);
+            e.printStackTrace();
+            lista = null;
+        }
+        return lista;
+    }
+    public List<ProdutoCliente> buscar(int prod, int cli) {/*busca os produtos do cliente pelo seu id*/
+               List<ProdutoCliente> lista = new ArrayList<ProdutoCliente>();
+       try {
+            query = "select * from tb_ProdCliente where idCliente=? and idProdCliente=? order by idProdCliente ASC";
+                ps = con.prepareStatement(query);
+                ps.setInt(1, cli);
+                ps.setInt(2, prod);
            rs = ps.executeQuery();
             while (rs.next())
                 lista.add(new ProdutoCliente(

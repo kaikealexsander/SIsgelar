@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import sisgelar.ExceptionDialog;
 import sisgelar.model.Produto;
 
 /**
@@ -35,23 +36,27 @@ public class ProdutoDao extends Conexao{
                 ps.setBytes(8, p.getImagem());
             if (ps.executeUpdate() > 0)
                 return true;
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Falha ao inserir dados na tabela ProdCLientes! \n"+e);
-            e.printStackTrace();
+        }catch (Throwable e) {
+//            JOptionPane.showMessageDialog(null,"Falha ao conectar ao banco de dados!\n"+e);
+//            e.printStackTrace();
+            ExceptionDialog Id = new ExceptionDialog("Erro inesperado!", "Falha ao inserir dados na tabela Produtos! ", e);
+            Id.setVisible(true);
         }
         return false;
     }
     
     public boolean excluir(Produto p){
         try {
-            query = "delete from tb_Produtos where idProdCliente=?";
+            query = "delete from tb_Produtos where idProduto=?";
                 ps = con.prepareStatement(query);
                 ps.setInt(1, p.getCodProd());
             if (ps.executeUpdate() > 0)
                 return true;
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Falha ao excluir dados na tabela Produtos! \n"+e);
-            e.printStackTrace();
+        }catch (Throwable e) {
+//            JOptionPane.showMessageDialog(null,"Falha ao conectar ao banco de dados!\n"+e);
+//            e.printStackTrace();
+            ExceptionDialog Id = new ExceptionDialog("Erro inesperado!", "Falha ao deletar dados na tabela Produtos! ", e);
+            Id.setVisible(true);
         }
         return false;
     }
@@ -72,9 +77,11 @@ public class ProdutoDao extends Conexao{
                 ps.setBytes(8, p.getImagem());
             if (ps.executeUpdate() > 0)
                 return true;
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Falha ao alterar dados na tabela Produtos! \n"+e);
-            e.printStackTrace();
+        }catch (Throwable e) {
+//            JOptionPane.showMessageDialog(null,"Falha ao conectar ao banco de dados!\n"+e);
+//            e.printStackTrace();
+            ExceptionDialog Id = new ExceptionDialog("Erro inesperado!", "Falha ao alterar dados na tabela Produtos! ", e);
+            Id.setVisible(true);
         }
         return false;
     }
@@ -102,10 +109,11 @@ public class ProdutoDao extends Conexao{
                         rs.getDouble("lucro"),
                         rs.getBytes("imagem")
                 ));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Falha ao buscar dados na tabela Produto! \n"+e);
-            e.printStackTrace();
-            lista = null;
+        }catch (Throwable e) {
+//            JOptionPane.showMessageDialog(null,"Falha ao conectar ao banco de dados!\n"+e);
+//            e.printStackTrace();
+            ExceptionDialog Id = new ExceptionDialog("Erro inesperado!", "Falha ao buscar dados na tabela Produtos! ", e);
+            Id.setVisible(true);
         }
         return lista;
     }
@@ -129,9 +137,11 @@ public class ProdutoDao extends Conexao{
                         rs.getDouble("lucro"),
                         rs.getBytes("imagem")
                 ));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Falha ao buscar dados na tabela Produto! \n"+e);
-            e.printStackTrace();
+        }catch (Throwable e) {
+//            JOptionPane.showMessageDialog(null,"Falha ao conectar ao banco de dados!\n"+e);
+//            e.printStackTrace();
+            ExceptionDialog Id = new ExceptionDialog("Erro inesperado!", "Falha ao buscar dados na tabela ProdCLientes! ", e);
+            Id.setVisible(true);
             lista = null;
         }
         return lista;

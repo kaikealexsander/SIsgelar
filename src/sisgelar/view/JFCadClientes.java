@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.text.MaskFormatter;
 import sisgelar.controller.PessoaController;
+import sisgelar.controller.ProdutoClienteController;
 import sisgelar.model.Pessoa;
 import sisgelar.controller.Utilitarios;
 import sisgelar.model.ProdutoCliente;
@@ -52,7 +53,7 @@ public class JFCadClientes extends javax.swing.JFrame {
         btnCadastrar = new javax.swing.JButton();
         Limpar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jtpProdutos = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jtfEmail = new javax.swing.JTextField();
@@ -100,25 +101,27 @@ public class JFCadClientes extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtProdCli = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jtfCodProdCliente = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jtfCodCliente = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        jtfMarcaProdCliente = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        jtfPotenciaProdCliente = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        jtfVoltagemProdCliente = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        jtfModeloProdCliente = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        jtfLocalProdCliente = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jbtnSalvarProd = new javax.swing.JButton();
+        Apagar = new javax.swing.JButton();
+        jbListarProdCliente = new javax.swing.JButton();
+        jlNomeCliente = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -167,7 +170,7 @@ public class JFCadClientes extends javax.swing.JFrame {
             }
         });
 
-        jTabbedPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jtpProdutos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel3.setText("Celular:");
 
@@ -309,11 +312,11 @@ public class JFCadClientes extends javax.swing.JFrame {
                 .addContainerGap(65, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Dados Pessoais", jPanel1);
+        jtpProdutos.addTab("Dados Pessoais", jPanel1);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtProdCli.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -323,62 +326,94 @@ public class JFCadClientes extends javax.swing.JFrame {
             new String [] {
                 "ID", "Marca", "Modelo", "Potência", "Voltagem", "Local de Inst."
             }
-        ));
-        jScrollPane2.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtProdCli.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtProdCliMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jtProdCli);
+        if (jtProdCli.getColumnModel().getColumnCount() > 0) {
+            jtProdCli.getColumnModel().getColumn(0).setResizable(false);
+            jtProdCli.getColumnModel().getColumn(1).setResizable(false);
+            jtProdCli.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         jLabel10.setText("Cod:");
 
-        jTextField1.setText(" ");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jtfCodProdCliente.setText(" ");
+        jtfCodProdCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jtfCodProdClienteActionPerformed(evt);
             }
         });
 
         jLabel11.setText("Cod Cliente:");
 
-        jTextField2.setText("        ");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jtfCodCliente.setEditable(false);
+        jtfCodCliente.setText("        ");
+        jtfCodCliente.setEnabled(false);
+        jtfCodCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                jtfCodClienteActionPerformed(evt);
             }
         });
 
         jLabel12.setText("Marca:");
 
-        jTextField3.setText("                            ");
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        jtfMarcaProdCliente.setText("                            ");
+        jtfMarcaProdCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                jtfMarcaProdClienteActionPerformed(evt);
             }
         });
 
         jLabel13.setText("Potência:");
 
-        jTextField4.setText("     ");
+        jtfPotenciaProdCliente.setText("     ");
 
         jLabel14.setText("Voltagem:");
 
-        jTextField5.setText("    ");
+        jtfVoltagemProdCliente.setText("    ");
 
         jLabel15.setText("Modelo:");
 
-        jTextField6.setText("          ");
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        jtfModeloProdCliente.setText("          ");
+        jtfModeloProdCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                jtfModeloProdClienteActionPerformed(evt);
             }
         });
 
         jLabel16.setText("Local de Instalação:");
 
-        jTextField7.setText("      ");
+        jtfLocalProdCliente.setText("      ");
 
         jButton1.setText("Novo");
 
-        jButton3.setText("Salvar");
+        jbtnSalvarProd.setText("Salvar");
+        jbtnSalvarProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnSalvarProdActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Excluir");
+        Apagar.setText("Apagar");
+
+        jbListarProdCliente.setText("Listar");
+        jbListarProdCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbListarProdClienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -387,9 +422,10 @@ public class JFCadClientes extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jbListarProdCliente)
+                    .addComponent(jbtnSalvarProd)
+                    .addComponent(Apagar)
+                    .addComponent(jButton1))
                 .addGap(10, 10, 10))
         );
         jPanel3Layout.setVerticalGroup(
@@ -398,11 +434,15 @@ public class JFCadClientes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(Apagar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addComponent(jbtnSalvarProd)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbListarProdCliente)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
+
+        jlNomeCliente.setText("                     ");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -417,28 +457,31 @@ public class JFCadClientes extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtfCodProdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2))
+                        .addComponent(jtfCodCliente))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtfMarcaProdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel15)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextField7))
+                    .addComponent(jtfLocalProdCliente))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel14)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jtfVoltagemProdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtfModeloProdCliente))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextField6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtfPotenciaProdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jlNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(53, 53, 53)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -452,43 +495,40 @@ public class JFCadClientes extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfCodProdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtfCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlNomeCliente))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel15)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfModeloProdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfMarcaProdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtfPotenciaProdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel16)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfLocalProdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel14)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jtfVoltagemProdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jTabbedPane1.addTab("Produtos", jPanel2);
+        jtpProdutos.addTab("Produtos", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jTabbedPane1)))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jtpProdutos, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(148, 148, 148)
@@ -504,7 +544,7 @@ public class JFCadClientes extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtpProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrar)
@@ -551,7 +591,7 @@ public class JFCadClientes extends javax.swing.JFrame {
                 !txtCPF.getText().equals("") ||
             !txtEndereco.getText().equals(""))
         {
-            recebeCampos();
+            recebeCamposPessoa();
             Pessoa p3 = new Pessoa(codigo, pessoa, cpf, endereco, cep, bairro, email, telefone, celular, celular2, fantasia, numero);
             if(codigo>0)/*Se o codigo ja existir altera*/
             {
@@ -593,7 +633,7 @@ public class JFCadClientes extends javax.swing.JFrame {
         switch (JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o produto?","Atenção", JOptionPane.YES_NO_OPTION )) {
             case 0:
             //System.out.println("botao yes clicado");
-            recebeCampos();
+            recebeCamposPessoa();
             Pessoa p3 = new Pessoa(codigo, pessoa, cpf, endereco, cep, bairro, email, telefone, celular, celular2, fantasia, numero);
             PessoaController.remover(p3);
             buscaInicial("");
@@ -603,21 +643,83 @@ public class JFCadClientes extends javax.swing.JFrame {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_btnExcluirActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jtfCodProdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCodProdClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jtfCodProdClienteActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void jtfCodClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCodClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_jtfCodClienteActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void jtfMarcaProdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfMarcaProdClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_jtfMarcaProdClienteActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void jtfModeloProdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfModeloProdClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_jtfModeloProdClienteActionPerformed
+
+    private void jbtnSalvarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSalvarProdActionPerformed
+                if( !jtfMarcaProdCliente.getText().equals("") ||/* se os campos não estiverem vazios*/
+                !jtfModeloProdCliente.getText().equals("") ||
+            !jtfVoltagemProdCliente.getText().equals(""))
+        {
+            recebeCamposProdCliente();
+            ProdutoCliente prod = new ProdutoCliente(idProdCliente, idCliente, marca, potencia, voltagem, modelo, local);
+            if(idProdCliente>0)/*Se o codigo ja existir altera*/
+            {
+                switch (JOptionPane.showConfirmDialog(null, "Deseja realmente alterar as informações?","Atenção", JOptionPane.YES_NO_OPTION )) {
+                    case 0:/*Botão 'Sim' clicado*/
+                        ProdutoClienteController.modificar(prod);
+                        break;
+                    case 1:
+                        break;
+                }
+                }    else{/*Se codigo não existir insert*/
+                switch (JOptionPane.showConfirmDialog(null, "Deseja salvar as informações?","Atenção", JOptionPane.YES_NO_OPTION )) {
+                    case 0:/*Botão 'Sim' clicado*/
+                        ProdutoClienteController.cadastrar(prod);
+                        break;
+                    case 1:
+                        break;
+                }
+            }
+            buscaProdutos(idCliente);
+        }else/*caso campos não estejam preenchidos*/
+            JOptionPane.showMessageDialog(null, "Preencha as informações!");
+        
+    }//GEN-LAST:event_jbtnSalvarProdActionPerformed
+
+    private void jbListarProdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbListarProdClienteActionPerformed
+        int busca = Integer.parseInt(jtfCodCliente.getText());
+        buscaProdutos(busca);
+    }//GEN-LAST:event_jbListarProdClienteActionPerformed
+
+    private void jtProdCliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtProdCliMouseClicked
+        jtProdCli.getSelectionModel().addListSelectionListener(jtProdCli);
+        int proc = 0;
+        if (jtProdCli.getSelectedRow() >= 0) {
+            //            txtIdPessoa.setText(tabela.getValueAt(tabela.getSelectedRow(), 0).toString());
+            //            txtPessoa.setText(""+tabela.getValueAt(tabela.getSelectedRow(), 1));
+             proc = Integer.parseInt(jtProdCli.getValueAt(jtProdCli.getSelectedRow(), 0).toString());
+            int cli =Integer.parseInt(jtfCodCliente.getText());
+            for (ProdutoCliente produt : ProdutoClienteController.pesquisar(proc, cli)){
+                jtfCodProdCliente.setText(""+produt.getIdProdCliente());
+                jtfMarcaProdCliente.setText(""+produt.getMarca());
+                jtfModeloProdCliente.setText(""+produt.getModelo());
+                jtfVoltagemProdCliente.setText(""+produt.getVoltagem());
+                jtfLocalProdCliente.setText(""+produt.getLocalizacao());
+                jtfPotenciaProdCliente.setText(""+produt.getPotencia());
+        }
+            
+            System.out.println(proc);
+
+            btnExcluir.setEnabled(true);
+            btnCadastrar.setEnabled(true);
+            //btnCadastrar.setEnabled(false);
+        }
+
+    }//GEN-LAST:event_jtProdCliMouseClicked
 
     /**
      * @param args the command line arguments
@@ -655,14 +757,13 @@ public class JFCadClientes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Apagar;
     private javax.swing.JButton Limpar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnCancelaCadastro;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -684,22 +785,25 @@ public class JFCadClientes extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTFbairro;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JButton jbListarProdCliente;
+    private javax.swing.JButton jbtnSalvarProd;
     private javax.swing.JComboBox<String> jcbPessoa;
     private javax.swing.JTextField jftNumero;
     private javax.swing.JTextField jftfCelular;
     private javax.swing.JTextField jftfCelular2;
     private javax.swing.JFormattedTextField jftfCep;
     private javax.swing.JFormattedTextField jftfTelefone;
+    private javax.swing.JLabel jlNomeCliente;
+    private javax.swing.JTable jtProdCli;
+    private javax.swing.JTextField jtfCodCliente;
+    private javax.swing.JTextField jtfCodProdCliente;
     private javax.swing.JTextField jtfEmail;
+    private javax.swing.JTextField jtfLocalProdCliente;
+    private javax.swing.JTextField jtfMarcaProdCliente;
+    private javax.swing.JTextField jtfModeloProdCliente;
+    private javax.swing.JTextField jtfPotenciaProdCliente;
+    private javax.swing.JTextField jtfVoltagemProdCliente;
+    private javax.swing.JTabbedPane jtpProdutos;
     private javax.swing.JLabel lbEndereco;
     private javax.swing.JLabel lbNome;
     private javax.swing.JLabel lblNomeFantasia;
@@ -712,7 +816,7 @@ public class JFCadClientes extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private String b="";
-    
+    /*Variáveis Cliente*/
     int codigo;
     String pessoa;
     String endereco;
@@ -726,7 +830,17 @@ public class JFCadClientes extends javax.swing.JFrame {
     String fantasia;
     String numero;
     
-        public void recebeCampos(){
+    /*Variáveis ProdCliente*/
+    int idProdCliente;
+    int idCliente = 0;
+    String marca;
+    String modelo;
+    String local;
+    String potencia;
+    String voltagem;
+    
+    
+        public void recebeCamposPessoa(){
             if (txtIdPessoa.getText().length()>0){
                 codigo   =  Integer.parseInt(txtIdPessoa.getText());
             }else codigo = 0;
@@ -740,6 +854,22 @@ public class JFCadClientes extends javax.swing.JFrame {
         email    =  jtfEmail.getText();
         bairro   =  jTFbairro.getText();
         numero   =  jftNumero.getText();
+    }
+        
+        public void recebeCamposProdCliente(){
+            if (txtIdPessoa.getText().length()>0){/*Enquanto não tiver cadastro de cliente selecionado nao recebe campos do produto*/
+                codigo        =  Integer.parseInt(txtIdPessoa.getText());
+                marca         =  jtfMarcaProdCliente.getText();
+                modelo        =  jtfModeloProdCliente.getText();
+                voltagem      =  jtfVoltagemProdCliente.getText();
+                local         =  jtfLocalProdCliente.getText();
+                potencia      =  jtfPotenciaProdCliente.getText();
+            }else codigo = 0;
+            
+            if (jtfCodProdCliente.getText().length()>0){
+                idProdCliente   =  Integer.parseInt(jtfCodProdCliente.getText());
+            }else idProdCliente = 0;
+        
     }
     
     public void preencheCampos(int pC){
@@ -757,7 +887,25 @@ public class JFCadClientes extends javax.swing.JFrame {
             jTFbairro.setText(ps.getBairro());
             jftNumero.setText(ps.getNumero());
             
+            jtfCodCliente.setText(""+ps.getIdpessoa());
+            jlNomeCliente.setText(ps.getNome());
+            idCliente = Integer.parseInt(jtfCodCliente.getText());
+            buscaProdutos(idCliente);
         }
+        
+    }
+    
+//    public void preencheProdCliente(int pdC){
+//        
+//    }
+    
+    public void limpaCamposProdCliente(){
+            jtfCodProdCliente.setText("");
+            jtfMarcaProdCliente.setText("");
+            jtfModeloProdCliente.setText("");
+            jtfVoltagemProdCliente.setText("");
+            jtfLocalProdCliente.setText("");
+            jtfPotenciaProdCliente.setText("");
     }
        
     private void buscaInicial(String b){        
@@ -837,9 +985,35 @@ public class JFCadClientes extends javax.swing.JFrame {
     void setProduto(ProdutoCliente prod) {
         this.produto = prod;
     }
+
+    private void buscaProdutos(int busca) {
+
+                
+           DefaultTableModel busctabe = new DefaultTableModel();
+           String[] nomesColunas = new String[]{"ID","MARCA", "MODELO", "POTENCIA", "VOLTAGE","LOCALIZAÇÃO"};
+           busctabe.setColumnIdentifiers(nomesColunas);
+           busctabe.setNumRows(0);
+
+            for (ProdutoCliente prodCliente : ProdutoClienteController.pesquisar(busca)) {
+                            busctabe.addRow(new Object[]{
+                                prodCliente.getIdProdCliente(),
+                                prodCliente.getMarca(),
+                                prodCliente.getModelo(),
+                                prodCliente.getPotencia(),
+                                prodCliente.getVoltagem(),
+                                prodCliente.getLocalizacao()});
+            }
+            jtProdCli.setModel(busctabe);
+            jtProdCli.getColumnModel().getColumn(0).setPreferredWidth(5);
+            jtProdCli.getColumnModel().getColumn(1).setPreferredWidth(20);
+            jtProdCli.getColumnModel().getColumn(2).setPreferredWidth(20);
+            jtProdCli.getColumnModel().getColumn(3).setPreferredWidth(25);
+            jtProdCli.getColumnModel().getColumn(4).setPreferredWidth(30);
+            jtProdCli.getColumnModel().getColumn(5).setPreferredWidth(30);
+            
+            limpaCamposProdCliente();
+            
+            
+    }
   
 }
-
-
-
-

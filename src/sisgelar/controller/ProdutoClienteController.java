@@ -27,12 +27,18 @@ public abstract class ProdutoClienteController {
 
     public static List<ProdutoCliente> pesquisar(String t) {
         ProdutoClienteDao dao = new ProdutoClienteDao();
-        List<ProdutoCliente> pessoas = dao.buscar(t);
+        List<ProdutoCliente> pessoas = dao.busque(t);
         return pessoas;
     }
     public static List<ProdutoCliente> pesquisar(int t) {
         ProdutoClienteDao dao = new ProdutoClienteDao();
         List<ProdutoCliente> pessoas = dao.buscar(t);
+        return pessoas;
+    }
+    
+    public static List<ProdutoCliente> pesquisar(int prod, int cli) {
+        ProdutoClienteDao dao = new ProdutoClienteDao();
+        List<ProdutoCliente> pessoas = dao.buscar(prod, cli);
         return pessoas;
     }
 
