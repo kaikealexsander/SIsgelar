@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sisgelar.view;
+package sisgelar.view.internal;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -13,7 +14,6 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.text.MaskFormatter;
 import sisgelar.controller.PessoaController;
 import sisgelar.controller.ProdutoClienteController;
@@ -23,18 +23,18 @@ import sisgelar.model.ProdutoCliente;
 
 /**
  *
- * @author kaikealexsander
+ * @author kaike
  */
-public class JFCadClientes extends javax.swing.JFrame {
+public class JIFCadClientes extends javax.swing.JInternalFrame {
+        private ProdutoCliente produto;
 
-    private ProdutoCliente produto;
 
     /**
-     * Creates new form JFCadClientes
+     * Creates new form JIFCadClientes
      */
-    public JFCadClientes() {
+    public JIFCadClientes() {
         initComponents();
-        inicia();
+         inicia();
         buscaInicial(b);
     }
 
@@ -123,8 +123,6 @@ public class JFCadClientes extends javax.swing.JFrame {
         jbListarProdCliente = new javax.swing.JButton();
         jlNomeCliente = new javax.swing.JLabel();
         jbAbrirOS = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -342,11 +340,6 @@ public class JFCadClientes extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(jtProdCli);
-        if (jtProdCli.getColumnModel().getColumnCount() > 0) {
-            jtProdCli.getColumnModel().getColumn(0).setResizable(false);
-            jtProdCli.getColumnModel().getColumn(1).setResizable(false);
-            jtProdCli.getColumnModel().getColumn(4).setResizable(false);
-        }
 
         jLabel10.setText("Cod:");
 
@@ -576,7 +569,6 @@ public class JFCadClientes extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-      
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
         tabela.getSelectionModel().addListSelectionListener(tabela);
         if (tabela.getSelectedRow() >= 0) {
@@ -607,7 +599,7 @@ public class JFCadClientes extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         if( !txtPessoa.getText().equals("") ||/* se os campos não estiverem vazios*/
-                !txtCPF.getText().equals("") ||
+            !txtCPF.getText().equals("") ||
             !txtEndereco.getText().equals(""))
         {
             recebeCamposPessoa();
@@ -616,30 +608,25 @@ public class JFCadClientes extends javax.swing.JFrame {
             {
                 switch (JOptionPane.showConfirmDialog(null, "Deseja realmente alterar as informações?","Atenção", JOptionPane.YES_NO_OPTION )) {
                     case 0:/*Botão 'Sim' clicado*/
-                        PessoaController.modificar(p3);
-                        break;
+                    PessoaController.modificar(p3);
+                    break;
                     case 1:
-                        break;
+                    break;
                 }
-        
-                }    else{/*Se codigo não existir insert*/
+
+            }    else{/*Se codigo não existir insert*/
                 switch (JOptionPane.showConfirmDialog(null, "Deseja salvar as informações?","Atenção", JOptionPane.YES_NO_OPTION )) {
                     case 0:/*Botão 'Sim' clicado*/
-                        PessoaController.cadastrar(p3);
-                        break;
+                    PessoaController.cadastrar(p3);
+                    break;
                     case 1:
-                        break;
+                    break;
                 }
             }
             buscaInicial("");
         }else/*caso campos não estejam preenchidos*/
-            JOptionPane.showMessageDialog(null, "Preencha as informações!");
+        JOptionPane.showMessageDialog(null, "Preencha as informações!");
     }//GEN-LAST:event_btnCadastrarActionPerformed
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        String b = txtPessoa.getText();
-        buscaInicial(b);
-    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void LimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimparActionPerformed
         new Utilitarios().limparTodosCampos(rootPane);
@@ -662,6 +649,36 @@ public class JFCadClientes extends javax.swing.JFrame {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_btnExcluirActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String b = txtPessoa.getText();
+        buscaInicial(b);
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void jtProdCliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtProdCliMouseClicked
+        jtProdCli.getSelectionModel().addListSelectionListener(jtProdCli);
+        int proc = 0;
+        if (jtProdCli.getSelectedRow() >= 0) {
+            //            txtIdPessoa.setText(tabela.getValueAt(tabela.getSelectedRow(), 0).toString());
+            //            txtPessoa.setText(""+tabela.getValueAt(tabela.getSelectedRow(), 1));
+            proc = Integer.parseInt(jtProdCli.getValueAt(jtProdCli.getSelectedRow(), 0).toString());
+            int cli =Integer.parseInt(jtfCodCliente.getText());
+            for (ProdutoCliente produt : ProdutoClienteController.pesquisar(proc, cli)){
+                jtfCodProdCliente.setText(""+produt.getIdProdCliente());
+                jtfMarcaProdCliente.setText(""+produt.getMarca());
+                jtfModeloProdCliente.setText(""+produt.getModelo());
+                jtfVoltagemProdCliente.setText(""+produt.getVoltagem());
+                jtfLocalProdCliente.setText(""+produt.getLocalizacao());
+                jtfPotenciaProdCliente.setText(""+produt.getPotencia());
+            }
+
+            System.out.println(proc);
+
+            btnExcluir.setEnabled(true);
+            btnCadastrar.setEnabled(true);
+            //btnCadastrar.setEnabled(false);
+        }
+    }//GEN-LAST:event_jtProdCliMouseClicked
+
     private void jtfCodProdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCodProdClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfCodProdClienteActionPerformed
@@ -679,8 +696,8 @@ public class JFCadClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfModeloProdClienteActionPerformed
 
     private void jbtnSalvarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSalvarProdActionPerformed
-                if( !jtfMarcaProdCliente.getText().equals("") ||/* se os campos não estiverem vazios*/
-                !jtfModeloProdCliente.getText().equals("") ||
+        if( !jtfMarcaProdCliente.getText().equals("") ||/* se os campos não estiverem vazios*/
+            !jtfModeloProdCliente.getText().equals("") ||
             !jtfVoltagemProdCliente.getText().equals(""))
         {
             recebeCamposProdCliente();
@@ -689,24 +706,24 @@ public class JFCadClientes extends javax.swing.JFrame {
             {
                 switch (JOptionPane.showConfirmDialog(null, "Deseja realmente alterar as informações?","Atenção", JOptionPane.YES_NO_OPTION )) {
                     case 0:/*Botão 'Sim' clicado*/
-                        ProdutoClienteController.modificar(prod);
-                        break;
+                    ProdutoClienteController.modificar(prod);
+                    break;
                     case 1:
-                        break;
+                    break;
                 }
-                }    else{/*Se codigo não existir insert*/
+            }    else{/*Se codigo não existir insert*/
                 switch (JOptionPane.showConfirmDialog(null, "Deseja salvar as informações?","Atenção", JOptionPane.YES_NO_OPTION )) {
                     case 0:/*Botão 'Sim' clicado*/
-                        ProdutoClienteController.cadastrar(prod);
-                        break;
+                    ProdutoClienteController.cadastrar(prod);
+                    break;
                     case 1:
-                        break;
+                    break;
                 }
             }
             buscaProdutos(idCliente);
         }else/*caso campos não estejam preenchidos*/
-            JOptionPane.showMessageDialog(null, "Preencha as informações!");
-        
+        JOptionPane.showMessageDialog(null, "Preencha as informações!");
+
     }//GEN-LAST:event_jbtnSalvarProdActionPerformed
 
     private void jbListarProdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbListarProdClienteActionPerformed
@@ -714,73 +731,13 @@ public class JFCadClientes extends javax.swing.JFrame {
         buscaProdutos(busca);
     }//GEN-LAST:event_jbListarProdClienteActionPerformed
 
-    private void jtProdCliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtProdCliMouseClicked
-        jtProdCli.getSelectionModel().addListSelectionListener(jtProdCli);
-        int proc = 0;
-        if (jtProdCli.getSelectedRow() >= 0) {
-            //            txtIdPessoa.setText(tabela.getValueAt(tabela.getSelectedRow(), 0).toString());
-            //            txtPessoa.setText(""+tabela.getValueAt(tabela.getSelectedRow(), 1));
-             proc = Integer.parseInt(jtProdCli.getValueAt(jtProdCli.getSelectedRow(), 0).toString());
-            int cli =Integer.parseInt(jtfCodCliente.getText());
-            for (ProdutoCliente produt : ProdutoClienteController.pesquisar(proc, cli)){
-                jtfCodProdCliente.setText(""+produt.getIdProdCliente());
-                jtfMarcaProdCliente.setText(""+produt.getMarca());
-                jtfModeloProdCliente.setText(""+produt.getModelo());
-                jtfVoltagemProdCliente.setText(""+produt.getVoltagem());
-                jtfLocalProdCliente.setText(""+produt.getLocalizacao());
-                jtfPotenciaProdCliente.setText(""+produt.getPotencia());
-        }
-            
-            System.out.println(proc);
-
-            btnExcluir.setEnabled(true);
-            btnCadastrar.setEnabled(true);
-            //btnCadastrar.setEnabled(false);
-        }
-
-    }//GEN-LAST:event_jtProdCliMouseClicked
-
     private void jbAbrirOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAbrirOSActionPerformed
         // TODO add your handling code here:
-       // enviaProdutoCliente();
-//       JIIFOrdemServico ordemServico = JIIFOrdemServico();
-//       ordemServico.setVisible(true);
+        // enviaProdutoCliente();
+      //  JIIFOrdemServico ordemServico = JIIFOrdemServico();
+     //   ordemServico.setVisible(true);
     }//GEN-LAST:event_jbAbrirOSActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFCadClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFCadClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFCadClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFCadClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new JFCadClientes().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Apagar;
@@ -842,6 +799,7 @@ public class JFCadClientes extends javax.swing.JFrame {
     private javax.swing.JTextField txtPessoa;
     // End of variables declaration//GEN-END:variables
 
+   
     private String b="";
     /*Variáveis Cliente*/
     int codigo;
@@ -989,7 +947,7 @@ public class JFCadClientes extends javax.swing.JFrame {
                     lblNomeFantasia.setEnabled(false);
                     txtNomeFantasia.setEnabled(false);
                 } catch (ParseException ex) {
-                    Logger.getLogger(JFCadClientes.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(JIFCadClientes.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             } else if (selectedBook.equals("PJ")) {
@@ -1002,7 +960,7 @@ public class JFCadClientes extends javax.swing.JFrame {
                     lblNomeFantasia.setEnabled(true);
                     txtNomeFantasia.setEnabled(true);
                 } catch (ParseException ex) {
-                    Logger.getLogger(JFCadClientes.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(JIFCadClientes.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -1042,6 +1000,10 @@ public class JFCadClientes extends javax.swing.JFrame {
             
             
     }
-    
 
+    public void setPosicao() {
+         Dimension d = this.getDesktopPane().getSize();
+        this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
+    }
 }
+

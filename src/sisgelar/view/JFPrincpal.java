@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import sisgelar.view.internal.JIFAgenda;
+import sisgelar.view.internal.JIFCadClientes;
 import sisgelar.view.internal.JIFEstoque;
 
 /**
@@ -58,6 +59,22 @@ public class JFPrincpal extends javax.swing.JFrame {
             {
         jifestoque.toFront();
         jifestoque.grabFocus();
+        }
+    }
+        private void criaJanelaJIFCadClientes() {
+        JIFCadClientes jifCadClientes = null;
+        //se não foi instanciado ou se foi fechado, cria um novo
+        if (jifCadClientes == null || jifCadClientes.isClosed()){
+        jifCadClientes  = new JIFCadClientes();
+        jdpPrincipal.add(jifCadClientes);
+        jifCadClientes.setClosable(true);
+        jifCadClientes.setVisible(true);
+        jifCadClientes.setPosicao();
+        }//senão envia a janela aberta pra frente
+            else
+            {
+        jifCadClientes.toFront();
+        jifCadClientes.grabFocus();
         }
     }
  
@@ -182,8 +199,7 @@ public class JFPrincpal extends javax.swing.JFrame {
 
     private void jMiClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMiClientesActionPerformed
         // TODO add your handling code here:
-        JFCadClientes cadClientes = new JFCadClientes();
-        cadClientes.setVisible(true);
+        criaJanelaJIFCadClientes();
     }//GEN-LAST:event_jMiClientesActionPerformed
 
     private void jmiEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEstoqueActionPerformed
