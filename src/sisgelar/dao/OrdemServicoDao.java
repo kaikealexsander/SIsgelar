@@ -13,7 +13,7 @@ public class OrdemServicoDao extends Conexao{
     
     public boolean inserir(OrdemServico p){
         try {
-            query = "insert into tb_OS values(0,?,?,?,?,?,?,?)";
+            query = "insert into tb_OS values(0,?,?,?,?,?,?,?,?)";
             
             ps = con.prepareStatement(query);
             ps.setInt(1, p.getIdOS());
@@ -22,6 +22,7 @@ public class OrdemServicoDao extends Conexao{
             ps.setString(5, p.getHorario());
             ps.setString(6, p.getDescricao());
             ps.setDouble(7, p.getValor());
+            ps.setString(8, p.getConcluido());
             if (ps.executeUpdate() > 0)
                 return true;
         } catch (Exception e) {
@@ -85,7 +86,8 @@ public class OrdemServicoDao extends Conexao{
                         rs.getInt("idProdCliente"),
                         rs.getString("data"),
                         rs.getString("descricao"),
-                        rs.getDouble("valor")
+                        rs.getDouble("valor"),
+                        rs.getString("concluido")
                 ));
             
         } catch (Exception e) {
@@ -110,7 +112,8 @@ public class OrdemServicoDao extends Conexao{
                         rs.getInt("idProdCliente"),
                         rs.getString("data"),
                         rs.getString("descricao"),
-                        rs.getDouble("valor")
+                        rs.getDouble("valor"),
+                        rs.getString("concluido")
                 ));
             
         } catch (Exception e) {

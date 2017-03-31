@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
@@ -27,12 +28,17 @@ import sisgelar.model.ProdutoCliente;
  */
 public class JIFCadClientes extends javax.swing.JInternalFrame {
         private ProdutoCliente produto;
+    private JDesktopPane jdesk;
 
 
     /**
      * Creates new form JIFCadClientes
      */
     public JIFCadClientes() {
+       
+    }
+    public JIFCadClientes(JDesktopPane jdesk){
+        this.jdesk = jdesk;
         initComponents();
          inicia();
         buscaInicial(b);
@@ -669,6 +675,8 @@ public class JIFCadClientes extends javax.swing.JInternalFrame {
                 jtfVoltagemProdCliente.setText(""+produt.getVoltagem());
                 jtfLocalProdCliente.setText(""+produt.getLocalizacao());
                 jtfPotenciaProdCliente.setText(""+produt.getPotencia());
+                recebeCamposProdCliente();
+                produtoCliente = new ProdutoCliente(idProdCliente, idCliente, marca, potencia, voltagem, modelo, local);
             }
 
             System.out.println(proc);
@@ -732,10 +740,8 @@ public class JIFCadClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbListarProdClienteActionPerformed
 
     private void jbAbrirOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAbrirOSActionPerformed
-        // TODO add your handling code here:
-        // enviaProdutoCliente();
-      //  JIIFOrdemServico ordemServico = JIIFOrdemServico();
-     //   ordemServico.setVisible(true);
+   criaJanelaJIIFOrdemServico();
+        
     }//GEN-LAST:event_jbAbrirOSActionPerformed
 
 
@@ -823,6 +829,7 @@ public class JIFCadClientes extends javax.swing.JInternalFrame {
     String local;
     String potencia;
     String voltagem;
+    ProdutoCliente produtoCliente;
     
     
         public void recebeCamposPessoa(){
@@ -1004,6 +1011,24 @@ public class JIFCadClientes extends javax.swing.JInternalFrame {
     public void setPosicao() {
          Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
+    }
+    
+     private void criaJanelaJIIFOrdemServico() {
+        JIIFOrdemServico jifOrdemServico = null;
+        //se não foi instanciado ou se foi fechado, cria um novo
+        if (jifOrdemServico == null || jifOrdemServico.isClosed()){
+            
+        jifOrdemServico  = new JIIFOrdemServico(produtoCliente, jdesk);
+        jdesk.add(jifOrdemServico);
+        jifOrdemServico.setClosable(true);
+        jifOrdemServico.setVisible(true);
+        //jifOrdemServico.setPosicao();
+        }//senão envia a janela aberta pra frente
+            else
+            {
+        jifOrdemServico.toFront();
+        jifOrdemServico.grabFocus();
+        }
     }
 }
 

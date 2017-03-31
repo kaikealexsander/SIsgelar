@@ -5,9 +5,13 @@
  */
 package sisgelar.view.internal;
 
+import javax.swing.JDesktopPane;
 import javax.swing.table.DefaultTableModel;
 import sisgelar.controller.OrdemServicoController;
+import sisgelar.controller.PessoaController;
+import sisgelar.controller.ProdutoClienteController;
 import sisgelar.model.OrdemServico;
+import sisgelar.model.Pessoa;
 import sisgelar.model.ProdutoCliente;
 
 /**
@@ -17,19 +21,24 @@ import sisgelar.model.ProdutoCliente;
 public class JIIFOrdemServico extends javax.swing.JInternalFrame {
 
     private ProdutoCliente prod;
+    private JDesktopPane jdesk;
 
     /**
      * Creates new form JIIFOrdemServico
      */
     public JIIFOrdemServico() {
-        initComponents();
+      initComponents();
+//
     }
     
-    public JIIFOrdemServico(ProdutoCliente prod){
-     this.prod = prod;   
+    public JIIFOrdemServico(ProdutoCliente prod, JDesktopPane jdesk){
+     this.jdesk = jdesk;
+     this.prod = prod;
+     initComponents();
+     buscaInicial(prod.getIdProdCliente());
+     
     }
     
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -66,13 +75,13 @@ public class JIIFOrdemServico extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(212, Short.MAX_VALUE)
+                .addContainerGap(231, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -84,37 +93,44 @@ public class JIIFOrdemServico extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtOrdemServicoMouseClicked
 
-   
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtOrdemServico;
     // End of variables declaration//GEN-END:variables
 
 
-      private void buscaInicial(String b){        
-        
+      private void buscaInicial(int b){        
            DefaultTableModel busctab = new DefaultTableModel();
-           String[] nomesColunas = new String[]{"ID","CLIENTE", "PRODUTO", "DESCRIÇÃO", "HORÁRIO"};
+           String[] nomesColunas = new String[]{"ID", "CLIENTE", "DETALHES", "DESCRIÇÃO", "HORÁRIO", "EXECUTADO"};
            busctab.setColumnIdentifiers(nomesColunas);
            busctab.setNumRows(0);
 
-            for (OrdemServico p : OrdemServicoController.pesquisar(b)) {
+            for (OrdemServico p : OrdemServicoController.pesquisar(b)) {//Pesquisa as ordens de serviço baseadas no id do produto
+                for (ProdutoCliente pd : ProdutoClienteController.pesquisar(p.getIdProdCliente(), p.getIdCliente())){//pesquisa os produtos paseados no idproduto e idcliente
+                for (Pessoa ps :PessoaController.pesquisar(p.getIdCliente())){//pesquisa o nome do cliente baseado no idcliente da ordem de serviço
+                
                             busctab.addRow(new Object[]{
                                 p.getIdOS(),
-                                p.getIdCliente(),
-                                p.getIdProdCliente(),
+                                ps.getNome(),
+                                pd.toString(),
                                 p.getDescricao(),
-                                p.getHorario()
+                                p.getHorario(),
+                                p.getConcluido(),
                                 
                             });
+                    }
+                }
             }
             jtOrdemServico.setModel(busctab);
-            jtOrdemServico.getColumnModel().getColumn(0).setPreferredWidth(5);
-            jtOrdemServico.getColumnModel().getColumn(1).setPreferredWidth(200);
-            jtOrdemServico.getColumnModel().getColumn(2).setPreferredWidth(100);
-            jtOrdemServico.getColumnModel().getColumn(3).setPreferredWidth(150);
+            jtOrdemServico.getColumnModel().getColumn(0).setPreferredWidth(5);//ID
+            jtOrdemServico.getColumnModel().getColumn(1).setPreferredWidth(30);//CLIENTE
+            jtOrdemServico.getColumnModel().getColumn(2).setPreferredWidth(60);//DETALHES
+            jtOrdemServico.getColumnModel().getColumn(3).setPreferredWidth(100);//DESCRICAO
+            jtOrdemServico.getColumnModel().getColumn(4).setPreferredWidth(50);//HORARIO
+            jtOrdemServico.getColumnModel().getColumn(5).setPreferredWidth(15);//EXECUTADO
             //new Utilitarios().limparTodosCampos(rootPane);
     }           
+
+     
 
 }

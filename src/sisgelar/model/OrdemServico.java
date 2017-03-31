@@ -16,17 +16,19 @@ public class OrdemServico {
     private String horario;
     private String descricao;
     private double valor;
+    private String concluido;
 
     public OrdemServico() {
     }
 
-    public OrdemServico(int idOS, int idCliente, int idProdCliente, String horario, String descricao, double valor) {
+    public OrdemServico(int idOS, int idCliente, int idProdCliente, String horario, String descricao, double valor, String concluido) {
         this.idOS = idOS;
         this.idCliente = idCliente;
         this.idProdCliente = idProdCliente;
         this.horario = horario;
         this.descricao = descricao;
         this.valor = valor;
+        this.concluido = concluido;
     }
 
     public int getIdOS() {
@@ -76,4 +78,15 @@ public class OrdemServico {
     public void setValor(double valor) {
         this.valor = valor;
     }
+
+    public String getConcluido() {
+        return concluido;
+    }
+
+    public void setConcluido(String concluido) {
+        this.concluido = concluido;
+    }
+
+
+    
 }

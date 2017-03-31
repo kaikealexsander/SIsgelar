@@ -65,7 +65,7 @@ public class JFPrincpal extends javax.swing.JFrame {
         JIFCadClientes jifCadClientes = null;
         //se não foi instanciado ou se foi fechado, cria um novo
         if (jifCadClientes == null || jifCadClientes.isClosed()){
-        jifCadClientes  = new JIFCadClientes();
+        jifCadClientes  = new JIFCadClientes(jdpPrincipal);
         jdpPrincipal.add(jifCadClientes);
         jifCadClientes.setClosable(true);
         jifCadClientes.setVisible(true);
