@@ -16,6 +16,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
+import sisgelar.MyTableModel;
 import sisgelar.controller.PessoaController;
 import sisgelar.controller.ProdutoClienteController;
 import sisgelar.model.Pessoa;
@@ -28,7 +29,7 @@ import sisgelar.model.ProdutoCliente;
  */
 public class JIFCadClientes extends javax.swing.JInternalFrame {
         private ProdutoCliente produto;
-    private JDesktopPane jdesk;
+        private JDesktopPane jdesk;
 
 
     /**
@@ -130,14 +131,9 @@ public class JIFCadClientes extends javax.swing.JInternalFrame {
         jlNomeCliente = new javax.swing.JLabel();
         jbAbrirOS = new javax.swing.JButton();
 
-        tabela.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        setTitle("Cadastro de Clientes");
 
-            },
-            new String [] {
-
-            }
-        ));
+        tabela.getTableHeader().setReorderingAllowed(false);
         tabela.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaMouseClicked(evt);
@@ -902,7 +898,7 @@ public class JIFCadClientes extends javax.swing.JInternalFrame {
        
     private void buscaInicial(String b){        
         
-           DefaultTableModel busctab = new DefaultTableModel();
+           MyTableModel busctab = new MyTableModel();
            String[] nomesColunas = new String[]{"ID","NOME", "CPF/CNPJ", "ENDEREÇO"};
            busctab.setColumnIdentifiers(nomesColunas);
            busctab.setNumRows(0);
@@ -979,12 +975,15 @@ public class JIFCadClientes extends javax.swing.JInternalFrame {
     }
 
     private void buscaProdutos(int busca) {
-
-                
-           DefaultTableModel busctabe = new DefaultTableModel();
+        
+           MyTableModel busctabe = new MyTableModel();
+           
            String[] nomesColunas = new String[]{"ID","MARCA", "MODELO", "POTENCIA", "VOLTAGE","LOCALIZAÇÃO"};
            busctabe.setColumnIdentifiers(nomesColunas);
            busctabe.setNumRows(0);
+           
+           
+           
 
             for (ProdutoCliente prodCliente : ProdutoClienteController.pesquisar(busca)) {
                             busctabe.addRow(new Object[]{
@@ -996,6 +995,7 @@ public class JIFCadClientes extends javax.swing.JInternalFrame {
                                 prodCliente.getLocalizacao()});
             }
             jtProdCli.setModel(busctabe);
+            
             jtProdCli.getColumnModel().getColumn(0).setPreferredWidth(5);
             jtProdCli.getColumnModel().getColumn(1).setPreferredWidth(20);
             jtProdCli.getColumnModel().getColumn(2).setPreferredWidth(20);
@@ -1008,10 +1008,6 @@ public class JIFCadClientes extends javax.swing.JInternalFrame {
             
     }
 
-    public void setPosicao() {
-         Dimension d = this.getDesktopPane().getSize();
-        this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
-    }
     
      private void criaJanelaJIIFOrdemServico() {
         JIIFOrdemServico jifOrdemServico = null;

@@ -357,8 +357,5 @@ public class JIFEstoque extends javax.swing.JInternalFrame {
             new Utilitarios().limparTodosCampos(rootPane);
     }             
 
-    public void setPosicao() {
-        Dimension d = this.getDesktopPane().getSize();
-        this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
-    }
+    
 }

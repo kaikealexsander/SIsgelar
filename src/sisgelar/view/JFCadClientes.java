@@ -124,7 +124,8 @@ public class JFCadClientes extends javax.swing.JFrame {
         jlNomeCliente = new javax.swing.JLabel();
         jbAbrirOS = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastro de Clientes");
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

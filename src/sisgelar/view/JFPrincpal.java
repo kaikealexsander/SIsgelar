@@ -6,6 +6,10 @@
 package sisgelar.view;
 
 
+import java.awt.Dimension;
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -25,60 +29,37 @@ public class JFPrincpal extends javax.swing.JFrame {
      */
     public JFPrincpal() {
         initComponents();
-        chamaAgenda();
         this.setLocationRelativeTo(null);//faz o janela carregar no meio da tela
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
+        comandoInternal(new JIFAgenda(jdpPrincipal));
     }
-
-         
-
-    public void chamaAgenda(){
-
-             JIFAgenda internalFrame = new JIFAgenda();
-             internalFrame.setClosable(true);//Se o frame vai poder ser fechado pelo botão fechar
-             internalFrame.setIconifiable(true);//Se o frame vai poder ser minimizado. 
-             internalFrame.setResizable(true);//Pemite editar o tamanho.
-             jdpPrincipal.add(internalFrame); //Torna o seu painel interno visível 
-             internalFrame.setVisible(true);
-             internalFrame.setPosicao();//centraliza o frame
-             
-    }    
     
-        private void criaJanelaFrmCadProdutos() {
-        JIFEstoque jifestoque = null;
-        //se não foi instanciado ou se foi fechado, cria um novo
-        if (jifestoque == null || jifestoque.isClosed()){
-        jifestoque  = new JIFEstoque();
-        jdpPrincipal.add(jifestoque);
-        jifestoque.setClosable(true);
-        jifestoque.setVisible(true);
-        jifestoque.setPosicao();
-        }//senão envia a janela aberta pra frente
-            else
-            {
-        jifestoque.toFront();
-        jifestoque.grabFocus();
+    
+    public void comandoInternal(JInternalFrame frame){
+        for (JInternalFrame internal : jdpPrincipal.getAllFrames()){
+            if (internal.getClass().toString().equalsIgnoreCase(frame.getClass().toString())){
+                //JOptionPane.showMessageDialog(rootPane, "A Janela "+frame.getTitle()+" já está aberta!");
+                //InternalFrameToFront();
+                internal.toFront();
+                try {
+                    internal.setSelected(true);
+                } catch (PropertyVetoException ex) {
+                    Logger.getLogger(JFPrincpal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                return;
+            }
+            
         }
-    }
-        private void criaJanelaJIFCadClientes() {
-        JIFCadClientes jifCadClientes = null;
-        //se não foi instanciado ou se foi fechado, cria um novo
-        if (jifCadClientes == null || jifCadClientes.isClosed()){
-        jifCadClientes  = new JIFCadClientes(jdpPrincipal);
-        jdpPrincipal.add(jifCadClientes);
-        jifCadClientes.setClosable(true);
-        jifCadClientes.setVisible(true);
-        jifCadClientes.setPosicao();
-        }//senão envia a janela aberta pra frente
-            else
-            {
-        jifCadClientes.toFront();
-        jifCadClientes.grabFocus();
-        }
-    }
- 
+        jdpPrincipal.add(frame);
+        frame.setClosable(true);//habilita botão fechar
+        frame.setIconifiable(true);//habilita botão minimizar
+        frame.setMaximizable(true);//habilita botão maximizar/restaurar
+        Dimension d = frame.getDesktopPane().getSize();
+        frame.setLocation((d.width - frame.getSize().width) / 2, (d.height - frame.getSize().height) / 2);
+        frame.setVisible(true);//exibe o frame
 
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -111,11 +92,11 @@ public class JFPrincpal extends javax.swing.JFrame {
         jdpPrincipal.setLayout(jdpPrincipalLayout);
         jdpPrincipalLayout.setHorizontalGroup(
             jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGap(0, 722, Short.MAX_VALUE)
         );
         jdpPrincipalLayout.setVerticalGroup(
             jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 579, Short.MAX_VALUE)
+            .addGap(0, 555, Short.MAX_VALUE)
         );
 
         jmArquivo.setText("Arquivo");
@@ -199,11 +180,11 @@ public class JFPrincpal extends javax.swing.JFrame {
 
     private void jMiClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMiClientesActionPerformed
         // TODO add your handling code here:
-        criaJanelaJIFCadClientes();
+        comandoInternal(new JIFCadClientes(jdpPrincipal));
     }//GEN-LAST:event_jMiClientesActionPerformed
 
     private void jmiEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEstoqueActionPerformed
-    criaJanelaFrmCadProdutos();
+    comandoInternal(new JIFEstoque());
                 // TODO add your handling code here:
 
     }//GEN-LAST:event_jmiEstoqueActionPerformed
@@ -271,4 +252,6 @@ public class JFPrincpal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiSair;
     private javax.swing.JMenuItem jmiSobre;
     // End of variables declaration//GEN-END:variables
+
+    
 }

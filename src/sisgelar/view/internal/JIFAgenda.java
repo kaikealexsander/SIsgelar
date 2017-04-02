@@ -6,6 +6,7 @@
 package sisgelar.view.internal;
 
 import java.awt.Dimension;
+import javax.swing.JDesktopPane;
 import javax.swing.table.DefaultTableModel;
 import sisgelar.controller.Utilitarios;
 
@@ -15,12 +16,18 @@ import sisgelar.controller.Utilitarios;
  */
 public class JIFAgenda extends javax.swing.JInternalFrame {
 
+    private JDesktopPane jdesk;
+
     /**
      * Creates new form JIFAgenda
      */
     public JIFAgenda() {
+    
+    }
+    public JIFAgenda(JDesktopPane jdesk) {
+        this.jdesk = jdesk;
         initComponents();
-        
+        //this.setPosicao();
     }
 
     public void setPosicao() {//forçar iniciar no meio do desktop
@@ -41,6 +48,11 @@ public class JIFAgenda extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtAgenda = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Agenda");
 
         jtAgenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
