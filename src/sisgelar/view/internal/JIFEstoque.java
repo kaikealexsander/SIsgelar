@@ -64,10 +64,14 @@ public class JIFEstoque extends javax.swing.JInternalFrame {
         jLabel12 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setTitle("Controle de produtos em estoque");
+        setToolTipText("");
         setMinimumSize(new java.awt.Dimension(633, 394));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel1.setText("Controle de produtos em estoque");
 
         jLabel2.setText("Codigo:");
 
